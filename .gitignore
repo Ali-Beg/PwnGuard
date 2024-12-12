@@ -1,0 +1,18 @@
+# Virtual environment
+venv/
+
+# Python compiled files
+__pycache__/
+*.pyc
+
+# Log files
+*.log
+password_history.txt
+
+# Secret keys
+secret.key
+
+# IDE/editor specific files
+.vscode/
+.idea/
+*.swp
