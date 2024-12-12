@@ -1,140 +1,142 @@
-# PwnGuard - Advanced Password Security Tool
+# PwnGuard - Advanced Password Security Tool  
 
-> Protect, Generate, and Analyze Your Passwords
+> **Protect, Generate, and Analyze Your Passwords**  
+
+**[Visit the Live App](https://pwnguard.streamlit.app/)**  
 
 A comprehensive password security tool that checks for compromised passwords using the [Have I Been Pwned](https://haveibeenpwned.com/API/v3#PwnedPasswords) API and includes additional security features.
 
-## Features
+---
 
-- Check if passwords have been compromised in data breaches
-- Generate strong passwords
-- Password strength analysis
-- Password history tracking
-- Colorful console output for better visibility
-- Multiple operation modes (file-based, single password, password generation)
-- Interactive Streamlit Dashboard
-- Data visualization and analytics
-- Real-time password strength monitoring
+## 🚀 Features  
 
-## Security Measures
+- **Breach Detection**: Check if your passwords have been compromised in data breaches.  
+- **Strong Password Generator**: Create robust passwords with customizable length and criteria.  
+- **Password Strength Analysis**: Evaluate your password's strength in real-time.  
+- **Password History Tracking**: Log password check results securely.  
+- **Interactive Dashboard**: Visualize password analytics and trends with Streamlit.  
+- **Colorful Console Output**: Enhanced readability in CLI.  
+- **Multiple Operation Modes**:  
+  - File-based password checks.  
+  - Single password analysis.  
+  - Password generation.  
+- **Data Visualization**: Gain insights from breach analytics and password trends.  
 
-- **No Plain Text Storage**: Passwords are never stored in plain text
-- **Secure Password History**: All password checks are encrypted before logging
-- **K-Anonymity**: Uses HIBP's k-anonymity model (only first 5 chars of hash are sent)
-- **SHA-1 Hashing**: Passwords are hashed using SHA-1 before checking
-- **Encryption**: Uses Fernet (symmetric encryption) for storing password history
-- **Memory Safety**: Sensitive data is cleared from memory after use
+---
 
-## Requirements
+## 🔐 Security Measures  
 
-- Python 3.x
-- Required libraries:
+- **No Plain Text Storage**: Passwords are never stored in plain text.  
+- **K-Anonymity Compliance**: Uses HIBP's k-anonymity model, sending only the first 5 characters of the hashed password.  
+- **SHA-1 Hashing**: Passwords are hashed before external checks.  
+- **Encrypted History Logs**: Password check results are encrypted using Fernet (symmetric encryption).  
+- **Memory Safety**: Sensitive data is cleared from memory after use.  
+- **HTTPS Only**: Ensures secure API communication.  
+
+---
+
+## 🛠 Requirements  
+
+- Python 3.x  
+- Required libraries:  
   ```bash
   pip install -r requirements.txt
-  ```
+  ```  
 
-## Setup
+---
 
-1. **Create a virtual environment**:
-   ```sh
+## ⚙️ Setup  
+
+1. **Create a virtual environment**:  
+   ```bash
    python -m venv venv
-   ```
+   ```  
 
-2. **Activate the virtual environment**:
-   - On Windows:
-     ```sh
+2. **Activate the virtual environment**:  
+   - **Windows**:  
+     ```bash
      venv\Scripts\activate
-     ```
-   - On macOS/Linux:
-     ```sh
+     ```  
+   - **macOS/Linux**:  
+     ```bash
      source venv/bin/activate
-     ```
+     ```  
 
-3. **Install the dependencies**:
-   ```sh
+3. **Install dependencies**:  
+   ```bash
    pip install -r requirements.txt
-   ```
+   ```  
 
-## Deployment
+---
 
-### Local Development
+## 📊 Deployment  
 
-Follow the setup instructions above.
+### Local Development  
 
-### Streamlit Cloud Deployment
+Follow the setup instructions above to run the tool locally.  
 
-1. Fork this repository to your GitHub account
-2. Visit [Streamlit Cloud](https://streamlit.io/cloud)
-3. Connect your GitHub account
-4. Deploy the `streamlit_app.py` file
-5. Configure the following secrets in Streamlit Cloud:
+### Streamlit Cloud Deployment  
+
+1. Fork this repository.  
+2. Visit [Streamlit Cloud](https://streamlit.io/cloud).  
+3. Deploy the `streamlit_app.py` file.  
+4. Add the following secrets in Streamlit Cloud:  
    ```toml
    [secrets]
    auth_key = "your_encryption_key"
-   ```
+   ```  
 
-## Production Considerations
+---
 
-- Generate a new encryption key for production
-- Set up proper authentication for production use
-- Configure CORS and security headers
-- Use HTTPS for all API calls
-- Regular security audits and updates
+## 🌐 How to Use  
 
-## How to Use
+### **1. Web App**  
+Use the [Streamlit Dashboard](https://pwnguard.streamlit.app/) to interact with the tool online.  
 
-The application offers four ways to interact:
+### **2. Command Line Interface**  
+Run the tool directly:  
+```bash
+python check_my_password.py
+```  
 
-1. **Command Line Interface**:
-   ```bash
-   python check_my_passwoed.py
-   ```
+### **3. GUI Mode**  
+Launch a graphical interface:  
+```bash
+python gui.py
+```  
 
-2. **Graphical User Interface**:
-   ```bash
-   python gui.py
-   ```
+### **4. File-based Password Check**  
+- Place your passwords in a file (`passwords.txt`), one per line.  
+- Run the script and select the appropriate option.  
 
-3. **Streamlit Dashboard**:
-   ```bash
-   streamlit run streamlit_app.py
-   ```
-   The dashboard provides:
-   - Interactive password checking
-   - Password generation with strength visualization
-   - Security analytics dashboard
-   - Password strength trends
-   - Data breach history
+### **5. Generate Strong Passwords**  
+- Select the password generation option in CLI/GUI.  
+- Input desired password length (minimum 12 characters).  
 
-4. **Check passwords from file**:
-   - Place passwords in `passwords.txt` (one per line)
-   - Run the script and select option 1
-   
-5. **Generate strong password**:
-   - Run the script and select option 2
-   - Enter desired password length (minimum 12 characters)
-   
-6. **Check single password**:
-   - Run the script and select option 3
-   - Enter the password when prompted
+### **6. Single Password Check**  
+- Input a password directly via CLI or GUI.  
 
-## Password Strength Criteria
+---
 
-Passwords are evaluated based on:
-- Length (minimum 12 characters)
-- Presence of uppercase letters
-- Presence of lowercase letters
-- Presence of numbers
-- Presence of special characters
+## 📋 Password Strength Criteria  
 
-## History Tracking
+Passwords are evaluated based on:  
+- Length (minimum 12 characters).  
+- Use of uppercase and lowercase letters.  
+- Inclusion of numbers and special characters.  
 
-Password checks are logged in `password_history.txt` with:
-- Timestamp
-- Password
-- Number of times found in breaches
-- Strength score
+---
 
-## Disclaimer
+## 📁 History Tracking  
 
-Use this script responsibly. Do not use it to check passwords that you do not own.
+Results are securely logged in `password_history.txt` with:  
+- Timestamp.  
+- Password strength score.  
+- Breach count (if applicable).  
+
+---
+
+## 🔒 Disclaimer  
+
+Use this tool responsibly. Only check passwords that you own or have explicit permission to test.  
+

@@ -16,3 +16,9 @@ secret.key
 .vscode/
 .idea/
 *.swp
+
+.streamlit/
+
+
+.test_all.py
+.test_password_checker.py
