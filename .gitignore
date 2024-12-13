@@ -19,8 +19,9 @@ secrets.toml
 .idea/
 *.swp
 
-.streamlit/
-
-
+# Test files
 test_all.py
 test_password_checker.py
+
+# Streamlit
+.streamlit/
