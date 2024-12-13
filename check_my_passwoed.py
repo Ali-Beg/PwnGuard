@@ -7,6 +7,9 @@ from datetime import datetime
 from cryptography.fernet import Fernet
 from colorama import init, Fore, Style
 import toml
+import os
+import streamlit as st
+fernet_key = st.secrets["fernet_key"]
 
 init()  # Initialize colorama
 
@@ -73,17 +76,28 @@ def pawned_api_check(password):
 
 def load_key():
     try:
-        # First, try to load the key from the secret.key file
-        return open("secret.key", "rb").read()
-    except FileNotFoundError:
-        print(Fore.YELLOW + "secret.key not found. Checking secrets.toml..." + Style.RESET_ALL)
-        try:
-            # If secret.key is not found, try to load the key from secrets.toml
+        # First try to get key from Streamlit secrets
+        if 'streamlit' in sys.modules:
+            return st.secrets["fernet_key"].encode()
+            
+        # Then try local secret.key file
+        if os.path.exists("secret.key"):
+            return open("secret.key", "rb").read()
+            
+        # Finally try local secrets.toml
+        if os.path.exists("secrets.toml"):
             secrets = toml.load("secrets.toml")
             return secrets["fernet_key"].encode()
-        except (FileNotFoundError, KeyError):
-            print(Fore.RED + "Error: secret.key not found and no valid key in secrets.toml. Please run generate_key.py first" + Style.RESET_ALL)
-            sys.exit(1)
+            
+        raise FileNotFoundError("No encryption key found")
+            
+    except Exception as e:
+        print(Fore.RED + f"Error loading encryption key: {str(e)}" + Style.RESET_ALL)
+        print(Fore.YELLOW + "Please ensure either:" + Style.RESET_ALL)
+        print("1. secret.key file exists")
+        print("2. secrets.toml is configured")
+        print("3. Streamlit secrets are set up")
+        sys.exit(1)
 
 def encrypt_message(message):
     try:
