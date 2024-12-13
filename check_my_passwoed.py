@@ -6,6 +6,7 @@ import random
 from datetime import datetime
 from cryptography.fernet import Fernet
 from colorama import init, Fore, Style
+import toml
 
 init()  # Initialize colorama
 
@@ -72,10 +73,17 @@ def pawned_api_check(password):
 
 def load_key():
     try:
+        # First, try to load the key from the secret.key file
         return open("secret.key", "rb").read()
     except FileNotFoundError:
-        print(Fore.RED + "Error: secret.key not found. Please run generate_key.py first" + Style.RESET_ALL)
-        sys.exit(1)
+        print(Fore.YELLOW + "secret.key not found. Checking secrets.toml..." + Style.RESET_ALL)
+        try:
+            # If secret.key is not found, try to load the key from secrets.toml
+            secrets = toml.load("secrets.toml")
+            return secrets["fernet_key"].encode()
+        except (FileNotFoundError, KeyError):
+            print(Fore.RED + "Error: secret.key not found and no valid key in secrets.toml. Please run generate_key.py first" + Style.RESET_ALL)
+            sys.exit(1)
 
 def encrypt_message(message):
     try:

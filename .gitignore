@@ -9,8 +9,10 @@ __pycache__/
 *.log
 password_history.txt
 
-# Secret keys
+# Secret keys and configurations
 secret.key
+secrets.toml
+.streamlit/secrets.toml
 
 # IDE/editor specific files
 .vscode/
