@@ -15,7 +15,7 @@ from check_my_passwoed import (
 
 # Configure page with dark theme
 st.set_page_config(
-    page_title="Password Security Hub",
+    page_title="PwnGuard - Password Security Tool",
     page_icon="🔒",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -101,7 +101,12 @@ def load_password_history():
         return pd.DataFrame(columns=['Date', 'Password', 'Times Found', 'Strength'])
 
 def main():
-    st.title("🔒 Password Security Hub")
+    st.title("🔒 PwnGuard - Password Security Tool")
+    
+    # Verify secrets are configured
+    if "fernet_key" not in st.secrets:
+        st.error("Error: Streamlit secrets not configured! Please set up fernet_key in secrets.")
+        st.stop()
     
     # Initialize session state for dashboard updates
     if 'history_updated' not in st.session_state:
