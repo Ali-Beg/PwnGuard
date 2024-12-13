@@ -79,7 +79,7 @@ def load_key():
         # For Streamlit Cloud deployment
         if 'streamlit' in sys.modules:
             try:
-                return st.secrets["fernet_key"].encode()
+                return st.secrets["fernet_key"]
             except KeyError:
                 st.error("Streamlit secrets not configured properly")
                 st.stop()
