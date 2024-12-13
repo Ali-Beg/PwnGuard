@@ -9,7 +9,6 @@ from colorama import init, Fore, Style
 import toml
 import os
 import streamlit as st
-fernet_key = st.secrets["fernet_key"]
 
 init()  # Initialize colorama
 
@@ -75,16 +74,21 @@ def pawned_api_check(password):
     return password_leaks_count(response, tail)
 
 def load_key():
+    """Load encryption key from various sources"""
     try:
-        # First try to get key from Streamlit secrets
+        # For Streamlit Cloud deployment
         if 'streamlit' in sys.modules:
-            return st.secrets["fernet_key"].encode()
-            
-        # Then try local secret.key file
+            try:
+                return st.secrets["fernet_key"].encode()
+            except KeyError:
+                st.error("Streamlit secrets not configured properly")
+                st.stop()
+                
+        # For local development
         if os.path.exists("secret.key"):
-            return open("secret.key", "rb").read()
-            
-        # Finally try local secrets.toml
+            with open("secret.key", "rb") as key_file:
+                return key_file.read()
+        
         if os.path.exists("secrets.toml"):
             secrets = toml.load("secrets.toml")
             return secrets["fernet_key"].encode()
@@ -92,12 +96,12 @@ def load_key():
         raise FileNotFoundError("No encryption key found")
             
     except Exception as e:
-        print(Fore.RED + f"Error loading encryption key: {str(e)}" + Style.RESET_ALL)
-        print(Fore.YELLOW + "Please ensure either:" + Style.RESET_ALL)
-        print("1. secret.key file exists")
-        print("2. secrets.toml is configured")
-        print("3. Streamlit secrets are set up")
-        sys.exit(1)
+        if 'streamlit' in sys.modules:
+            st.error(f"Error loading encryption key: {str(e)}")
+            st.stop()
+        else:
+            print(Fore.RED + f"Error loading encryption key: {str(e)}" + Style.RESET_ALL)
+            sys.exit(1)
 
 def encrypt_message(message):
     try:
