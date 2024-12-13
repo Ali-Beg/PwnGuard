@@ -22,5 +22,5 @@ secrets.toml
 .streamlit/
 
 
-.test_all.py
-.test_password_checker.py
+test_all.py
+test_password_checker.py
